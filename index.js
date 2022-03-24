@@ -45,13 +45,28 @@ app.get("/players", async function (req, res) {
   res.send(get);
 });
 
-app.get("/players/:id", async function (req, res) {
-  const { id } = req.params;
-  const getid = await client
+// app.get("/players/:id", async function (req, res) {
+//   const { id } = req.params;
+//   console.log(req.params);
+//   const getid = await client
+//     .db("cricket")
+//     .collection("players")
+//     .findOne({ _id: ObjectId(id) });
+
+//   res.send(getid);
+// });
+
+app.get("/players/:id", async function (request, response) {
+  const { id } = request.params;
+  console.log(id);
+  const player = await client
     .db("cricket")
     .collection("players")
-    .findOne({ _id: ObjectId(id) });
-  res.send(getid);
+    .findOne({ _id: id });
+
+  player
+    ? response.send(player)
+    : response.status(404).send({ message: "No such player found" });
 });
 
 app.delete("/players/:id", async function (req, res) {
@@ -59,7 +74,7 @@ app.delete("/players/:id", async function (req, res) {
   const deleteid = await client
     .db("cricket")
     .collection("players")
-    .deleteOne({ _id: ObjectId(id) });
+    .deleteOne({ _id: id });
   res.send(deleteid);
 });
 
@@ -69,7 +84,7 @@ app.put("/players/:id", async function (req, res) {
   const putid = await client
     .db("cricket")
     .collection("players")
-    .updateOne({ _id: ObjectId(id) }, { $set: updateplayer });
+    .updateOne({ _id: id }, { $set: updateplayer });
   res.send(putid);
 });
 
