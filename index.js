@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use("/animelist", playerRouter);
+app.use("/players", playerRouter);
 
 app.use("/users", usersRouter);
 

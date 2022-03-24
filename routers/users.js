@@ -3,7 +3,7 @@ import express from "express";
 import { createUser, getUserByName } from "../helper.js";
 import jwt from "jsonwebtoken";
 
-const router = express.router();
+const router = express.Router();
 
 async function genPassword(password) {
   const salt = await bcrypt.genSalt(10);

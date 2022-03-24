@@ -8,7 +8,7 @@ import {
 } from "../helper.js";
 import { auth } from "../middleware/auth.js";
 
-const router = express.router();
+const router = express.Router();
 
 router.post("/players", async function (req, res) {
   const data = req.body;
