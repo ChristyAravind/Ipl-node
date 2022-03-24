@@ -1,10 +1,14 @@
 import express from "express";
 import { MongoClient } from "mongodb";
+import { ObjectId } from "mongodb";
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 const PORT = process.env.PORT;
 
@@ -46,7 +50,7 @@ app.get("/players/:id", async function (req, res) {
   const getid = await client
     .db("cricket")
     .collection("players")
-    .findOne({ id: id });
+    .findOne({ _id: ObjectId(id) });
   res.send(getid);
 });
 
@@ -55,7 +59,7 @@ app.delete("/players/:id", async function (req, res) {
   const deleteid = await client
     .db("cricket")
     .collection("players")
-    .deleteOne({ id: id });
+    .deleteOne({ _id: ObjectId(id) });
   res.send(deleteid);
 });
 
@@ -65,7 +69,7 @@ app.put("/players/:id", async function (req, res) {
   const putid = await client
     .db("cricket")
     .collection("players")
-    .updateOne({ id: id }, { $set: updateplayer });
+    .updateOne({ _id: ObjectId(id) }, { $set: updateplayer });
   res.send(putid);
 });
 
